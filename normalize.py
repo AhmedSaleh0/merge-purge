@@ -56,7 +56,7 @@ def build(row, street_suffixes):
     house, street = address if address else ("", "")
     return Record(
         rec_id=int(row["REC_ID"]),
-        key_code=row["KEY_CODE"],
+        key_code=row["KEY_CODE"].strip(),
         raw=row,
         first=name(row["FIRST_NAME"]),
         last=last,

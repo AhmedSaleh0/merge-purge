@@ -50,15 +50,15 @@ def read_sheet(workbook, name):
 
 def read_input(path):
     workbook = load_workbook(path, data_only=True)
-    plan = {
-        row["KEY_CODE"]: File(
-            key_code=row["KEY_CODE"],
-            type=row["TYPE"],
+    plan = {}
+    for row in read_sheet(workbook, "Plan"):
+        key_code = row["KEY_CODE"].strip()
+        plan[key_code] = File(
+            key_code=key_code,
+            type=row["TYPE"].strip(),
             priority=int(row["PRIORITY"]) if row["PRIORITY"] else 0,
-            list_name=row["LIST"],
+            list_name=row["LIST"].strip(),
         )
-        for row in read_sheet(workbook, "Plan")
-    }
     nicknames = {r["NICKNAME"].upper(): r["FULL_NAME"].upper()
                  for r in read_sheet(workbook, "Nicknames")}
     suffixes = {r["WORD"].upper(): r["STANDARD"].upper()
